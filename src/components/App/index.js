@@ -1,28 +1,21 @@
 import React, { PureComponent } from "react";
 import autobind from "class-autobind";
+import { connect } from "react-redux";
+import { loadPosts } from "../../modules/posts/action";
 import postApi from "../../api/posts";
 import PostList from "../PostList";
 import TitleInput from "../TitleInput";
 import BodyInput from "../BodyInput";
 import BodyPreview from "../BodyPreview";
 
-export default class App extends PureComponent {
-  state = {
-    posts: [],
-    selectedPostId: undefined
-  };
-
+class App extends PureComponent {
   constructor(props) {
     super(props);
     autobind(this);
   }
 
-  async componentDidMount() {
-    const posts = await postApi.getPosts();
-    this.setState({
-      posts,
-      selectedPostId: posts[0].id
-    });
+  componentDidMount() {
+    this.props.dispatch(loadPosts());
   }
 
   onSelectPost(postId) {
@@ -58,10 +51,8 @@ export default class App extends PureComponent {
   }
 
   render() {
-    const { posts, selectedPostId } = this.state;
-    if (!selectedPostId) return null;
-
-    const selectedPost = posts.filter(p => p.id === selectedPostId)[0];
+    const { posts, selectedPostId, selectedPost } = this.props;
+    if (!selectedPost) return null;
 
     return (
       <div className="container" style={{ paddingTop: 30 }}>
@@ -89,3 +80,10 @@ export default class App extends PureComponent {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  posts: state.posts,
+  selectedPostId: state.selectedPostId,
+  selectedPost: state.posts.filter(p => p.id === state.selectedPostId)[0]
+});
+export default connect(mapStateToProps)(App);
