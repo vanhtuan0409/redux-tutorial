@@ -4,6 +4,7 @@ import postApi from "../../api/posts";
 import PostList from "../PostList";
 import TitleInput from "../TitleInput";
 import BodyInput from "../BodyInput";
+import BodyPreview from "../BodyPreview";
 
 export default class App extends PureComponent {
   state = {
@@ -81,6 +82,7 @@ export default class App extends PureComponent {
               body={selectedPost.body}
               onChange={this.onChangeSelectedPostBody}
             />
+            <BodyPreview body={selectedPost.body} />
           </div>
         </div>
       </div>
