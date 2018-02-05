@@ -2,7 +2,6 @@ import React, { PureComponent } from "react";
 import autobind from "class-autobind";
 import { connect } from "react-redux";
 import { loadPosts } from "../../modules/posts/action";
-import postApi from "../../api/posts";
 import PostList from "../PostList";
 import TitleInput from "../TitleInput";
 import BodyInput from "../BodyInput";
@@ -58,11 +57,7 @@ class App extends PureComponent {
       <div className="container" style={{ paddingTop: 30 }}>
         <div className="row">
           <div className="col-sm-12 col-md-3">
-            <PostList
-              selectedPostId={selectedPostId}
-              posts={posts}
-              onSelect={this.onSelectPost}
-            />
+            <PostList selectedPostId={selectedPostId} posts={posts} />
           </div>
           <div className="col-sm-12 col-md-9">
             <TitleInput

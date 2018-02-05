@@ -1,8 +1,10 @@
 import React, { PureComponent } from "react";
+import { connect } from "react-redux";
+import { selectPost } from "../../modules/selectedPost/action";
 
-export default class PostList extends PureComponent {
+class PostList extends PureComponent {
   render() {
-    const { selectedPostId, posts, onSelect } = this.props;
+    const { selectedPostId, posts, dispatch } = this.props;
     return (
       <div className="list-group">
         {posts.map(p => (
@@ -11,7 +13,7 @@ export default class PostList extends PureComponent {
             className={`list-group-item list-group-item-action ${
               p.id === selectedPostId ? "active" : ""
             }`}
-            onClick={() => onSelect(p.id)}
+            onClick={() => dispatch(selectPost(p.id))}
           >
             {p.title}
           </button>
@@ -20,3 +22,5 @@ export default class PostList extends PureComponent {
     );
   }
 }
+
+export default connect()(PostList);
