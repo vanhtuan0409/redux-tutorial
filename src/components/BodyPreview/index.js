@@ -8,7 +8,7 @@ export default class BodyPreview extends PureComponent {
         <label>Body Preview</label>
         <div className="card">
           <div className="card-body">
-            <ReactMarkdown source={this.props.body} />
+            <ReactMarkdown source={this.props.post.body} />
           </div>
         </div>
       </div>

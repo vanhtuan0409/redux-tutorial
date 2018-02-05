@@ -31,10 +31,10 @@ export default class App extends PureComponent {
     });
   }
 
-  onChangeSelectedPostTitle(title) {
-    const { posts, selectedPostId } = this.state;
+  onChangePostTitle(postId, title) {
+    const { posts } = this.state;
     const newPosts = posts.map(p => {
-      if (p.id !== selectedPostId) return p;
+      if (p.id !== postId) return p;
       return Object.assign({}, p, {
         title
       });
@@ -44,10 +44,10 @@ export default class App extends PureComponent {
     });
   }
 
-  onChangeSelectedPostBody(body) {
-    const { posts, selectedPostId } = this.state;
+  onChangePostBody(postId, body) {
+    const { posts } = this.state;
     const newPosts = posts.map(p => {
-      if (p.id !== selectedPostId) return p;
+      if (p.id !== postId) return p;
       return Object.assign({}, p, {
         body
       });
@@ -74,15 +74,9 @@ export default class App extends PureComponent {
             />
           </div>
           <div className="col-sm-12 col-md-9">
-            <TitleInput
-              title={selectedPost.title}
-              onChange={this.onChangeSelectedPostTitle}
-            />
-            <BodyInput
-              body={selectedPost.body}
-              onChange={this.onChangeSelectedPostBody}
-            />
-            <BodyPreview body={selectedPost.body} />
+            <TitleInput post={selectedPost} onChange={this.onChangePostTitle} />
+            <BodyInput post={selectedPost} onChange={this.onChangePostBody} />
+            <BodyPreview post={selectedPost} />
           </div>
         </div>
       </div>

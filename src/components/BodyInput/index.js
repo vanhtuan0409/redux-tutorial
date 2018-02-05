@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 
 export default class BodyInput extends PureComponent {
   render() {
-    const { body, onChange } = this.props;
+    const { post, onChange } = this.props;
     return (
       <div className="form-group">
         <label htmlFor="body">Body</label>
@@ -10,8 +10,8 @@ export default class BodyInput extends PureComponent {
           id="body"
           className="form-control"
           rows={15}
-          value={body}
-          onChange={e => onChange(e.target.value)}
+          value={post.body}
+          onChange={e => onChange(post.id, e.target.value)}
         />
       </div>
     );
