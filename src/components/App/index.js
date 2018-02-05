@@ -3,6 +3,7 @@ import autobind from "class-autobind";
 import postApi from "../../api/posts";
 import PostList from "../PostList";
 import TitleInput from "../TitleInput";
+import BodyInput from "../BodyInput";
 
 export default class App extends PureComponent {
   state = {
@@ -42,6 +43,19 @@ export default class App extends PureComponent {
     });
   }
 
+  onChangeSelectedPostBody(body) {
+    const { posts, selectedPostId } = this.state;
+    const newPosts = posts.map(p => {
+      if (p.id !== selectedPostId) return p;
+      return Object.assign({}, p, {
+        body
+      });
+    });
+    this.setState({
+      posts: newPosts
+    });
+  }
+
   render() {
     const { posts, selectedPostId } = this.state;
     if (!selectedPostId) return null;
@@ -62,6 +76,10 @@ export default class App extends PureComponent {
             <TitleInput
               title={selectedPost.title}
               onChange={this.onChangeSelectedPostTitle}
+            />
+            <BodyInput
+              body={selectedPost.body}
+              onChange={this.onChangeSelectedPostBody}
             />
           </div>
         </div>
