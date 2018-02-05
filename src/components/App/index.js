@@ -1,5 +1,4 @@
 import React, { PureComponent } from "react";
-import autobind from "class-autobind";
 import { connect } from "react-redux";
 import { loadPosts } from "../../modules/posts/action";
 import PostList from "../PostList";
@@ -8,45 +7,8 @@ import BodyInput from "../BodyInput";
 import BodyPreview from "../BodyPreview";
 
 class App extends PureComponent {
-  constructor(props) {
-    super(props);
-    autobind(this);
-  }
-
   componentDidMount() {
     this.props.dispatch(loadPosts());
-  }
-
-  onSelectPost(postId) {
-    this.setState({
-      selectedPostId: postId
-    });
-  }
-
-  onChangeSelectedPostTitle(title) {
-    const { posts, selectedPostId } = this.state;
-    const newPosts = posts.map(p => {
-      if (p.id !== selectedPostId) return p;
-      return Object.assign({}, p, {
-        title
-      });
-    });
-    this.setState({
-      posts: newPosts
-    });
-  }
-
-  onChangeSelectedPostBody(body) {
-    const { posts, selectedPostId } = this.state;
-    const newPosts = posts.map(p => {
-      if (p.id !== selectedPostId) return p;
-      return Object.assign({}, p, {
-        body
-      });
-    });
-    this.setState({
-      posts: newPosts
-    });
   }
 
   render() {
@@ -60,15 +22,9 @@ class App extends PureComponent {
             <PostList selectedPostId={selectedPostId} posts={posts} />
           </div>
           <div className="col-sm-12 col-md-9">
-            <TitleInput
-              title={selectedPost.title}
-              onChange={this.onChangeSelectedPostTitle}
-            />
-            <BodyInput
-              body={selectedPost.body}
-              onChange={this.onChangeSelectedPostBody}
-            />
-            <BodyPreview body={selectedPost.body} />
+            <TitleInput post={selectedPost} />
+            <BodyInput post={selectedPost} />
+            <BodyPreview post={selectedPost} />
           </div>
         </div>
       </div>

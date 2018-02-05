@@ -12,3 +12,19 @@ export function loadPosts() {
     dispatch(selectPost(posts[0].id));
   };
 }
+
+export function changePostTitle(postId, title) {
+  return {
+    type: "CHANGE_POST_TITLE",
+    postId,
+    title
+  };
+}
+
+export function changePostBody(postId, body) {
+  return {
+    type: "CHANGE_POST_BODY",
+    postId,
+    body
+  };
+}
