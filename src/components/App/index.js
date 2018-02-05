@@ -2,6 +2,7 @@ import React, { PureComponent } from "react";
 import autobind from "class-autobind";
 import postApi from "../../api/posts";
 import PostList from "../PostList";
+import TitleInput from "../TitleInput";
 
 export default class App extends PureComponent {
   state = {
@@ -28,8 +29,25 @@ export default class App extends PureComponent {
     });
   }
 
+  onChangeSelectedPostTitle(title) {
+    const { posts, selectedPostId } = this.state;
+    const newPosts = posts.map(p => {
+      if (p.id !== selectedPostId) return p;
+      return Object.assign({}, p, {
+        title
+      });
+    });
+    this.setState({
+      posts: newPosts
+    });
+  }
+
   render() {
     const { posts, selectedPostId } = this.state;
+    if (!selectedPostId) return null;
+
+    const selectedPost = posts.filter(p => p.id === selectedPostId)[0];
+
     return (
       <div className="container" style={{ paddingTop: 30 }}>
         <div className="row">
@@ -40,7 +58,12 @@ export default class App extends PureComponent {
               onSelect={this.onSelectPost}
             />
           </div>
-          <div className="col-sm-12 col-md-9">Main content</div>
+          <div className="col-sm-12 col-md-9">
+            <TitleInput
+              title={selectedPost.title}
+              onChange={this.onChangeSelectedPostTitle}
+            />
+          </div>
         </div>
       </div>
     );
